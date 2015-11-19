@@ -33,7 +33,9 @@ var utils = (function () {
 
 	me.extend = function (target, obj) {
 		for ( var i in obj ) {
-			target[i] = obj[i];
+            if(obj.hasOwnProperty(i)){
+                target[i] = obj[i];
+            }
 		}
 	};
 
@@ -46,8 +48,9 @@ var utils = (function () {
 	};
 
 	me.prefixPointerEvent = function (pointerEvent) {
+        console.log(pointerEvent);
 		return window.MSPointerEvent ? 
-			'MSPointer' + pointerEvent.charAt(9).toUpperCase() + pointerEvent.substr(10):
+			'MSPointer' + pointerEvent.charAt(7).toUpperCase() + pointerEvent.substr(8):
 			pointerEvent;
 	};
 
@@ -142,11 +145,12 @@ var utils = (function () {
 
 	me.preventDefaultException = function (el, exceptions) {
 		for ( var i in exceptions ) {
-			if ( exceptions[i].test(el[i]) ) {
-				return true;
-			}
+            if(exceptions.hasOwnProperty(i)){
+                if ( exceptions[i].test(el[i]) ) {
+                    return true;
+                }
+            }
 		}
-
 		return false;
 	};
 
@@ -239,6 +243,5 @@ var utils = (function () {
 			target.dispatchEvent(ev);
 		}
 	};
-
 	return me;
 })();
